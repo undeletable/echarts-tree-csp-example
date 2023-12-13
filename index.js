@@ -385,14 +385,17 @@ const option = {
   ],
 };
 
-const canvasChart = echarts.init(document.getElementById("chart-canvas"), null, {
-  renderer: "canvas"
+let chart;
+
+document.getElementById("renderer-select").addEventListener("change", (event) => {
+  const renderer = event.target.value;
+  if (chart) {
+    chart.dispose();
+  }
+  if (renderer) {
+    chart = echarts.init(document.getElementById("chart-container"), null, {
+      renderer,
+    });
+    chart.setOption(option);
+  }
 });
-
-canvasChart.setOption(option);
-
-const svgChart = echarts.init(document.getElementById("chart-svg"), null, {
-  renderer: "svg"
-});
-
-svgChart.setOption(option);
